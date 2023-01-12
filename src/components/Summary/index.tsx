@@ -1,6 +1,6 @@
 import { Container } from './styles'
 
-import incomeImg from '../../assets/entradas.svg'
+import incomeImg from '../../assets/receitas.svg'
 import outComeImg from '../../assets/saidas.svg'
 import totalImg from '../../assets/cifrao.svg'
 
