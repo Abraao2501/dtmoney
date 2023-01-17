@@ -3,7 +3,7 @@ import { api } from './services/api'
 
 interface TransactionContextData{
   transactions: Transaction[];
-  createTransaction: (transaction: TransactionInput) => void
+  createTransaction: (transaction: TransactionInput) => Promise<void>
 }
 
 interface Transaction { 
@@ -31,9 +31,19 @@ export function TransactionsProvider(props: TransactionProps){
     .then(response => setTransactions(response.data.transactions))
   },[])
 
-  function createTransaction(transaction: TransactionInput){
-    api.post('/transactions', transaction)
-  }
+  async function createTransaction(transactionInput: TransactionInput){
+    const response = await api.post('/transactions', {
+      ...transactionInput,
+      createAt: new Date()
+    });
+
+    const { transaction } = response.data;
+
+    setTransactions([
+      ...transactions,
+      transaction
+    ])
+   }
 
   return (
     <TransactionsContext.Provider value={{ transactions , createTransaction }}>
